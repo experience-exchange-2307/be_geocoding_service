@@ -6,7 +6,7 @@ class Api::V1::CoordinatesController < ApplicationController
     coordinates = facade.coordinates
 
     if coordinates.present?
-      render json: { coordinates: coordinates }
+      render json: coordinates 
     else
       render json: { error: 'Coordinates not found' }, status: :not_found
     end

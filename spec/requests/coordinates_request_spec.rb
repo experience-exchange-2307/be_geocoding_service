@@ -9,11 +9,11 @@ RSpec.describe "geocode address", type: :request do
       expect(response.status).to eq(200)
 
       response_body = JSON.parse(response.body, symbolize_names: true)
-      coordinates = response_body[:coordinates]
-      expect(coordinates).to have_key(:lat)
-      expect(coordinates).to have_key(:lon)
-      expect(coordinates[:lat]).to be_a(Float)
-      expect(coordinates[:lon]).to be_a(Float)
+      
+      expect(response_body).to have_key(:lat)
+      expect(response_body).to have_key(:lon)
+      expect(response_body[:lat]).to be_a(Float)
+      expect(response_body[:lon]).to be_a(Float)
     end
 
     it "returns an error message if coordinates are not present" do 
@@ -22,12 +22,10 @@ RSpec.describe "geocode address", type: :request do
       expect(response).to be_successful
 
       response_body = JSON.parse(response.body, symbolize_names: true)
-      coordinates = response_body[:coordinates]
-      expect(coordinates).to_not have_key(:lat)
-      expect(coordinates).to_not have_key(:lon)
+      expect(response_body).to_not have_key(:coordinates)
 
-      expect(coordinates).to have_key(:error)
-      expect(coordinates[:error]).to eq('Coordinates not found')
+      expect(response_body).to have_key(:error)
+      expect(response_body[:error]).to eq('Coordinates not found')
     end
   end
 end
