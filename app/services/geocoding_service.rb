@@ -1,8 +1,11 @@
 class GeocodingService
   def conn
+    api_key = Rails.application.credentials.geoapify[:api_key]
+    Rails.logger.info("API Key: #{api_key.inspect}")
+
     Faraday.new(
       url: "https://api.geoapify.com",
-      params: { apiKey: Rails.application.credentials.geoapify[:api_key] }
+      params: { apiKey: api_key }
     )
   end
 
